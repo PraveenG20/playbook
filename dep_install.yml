@@ -1,0 +1,22 @@
+---
+- name: install wget and unzip
+  hosts: lin
+  become: true
+  
+  tasks:
+   - name: install wget
+     yum:
+       name: wget
+       state: present
+
+   - name: install unzip
+     yum:
+       name: unzip
+       state: present
+
+   - name: get package from GCS Storage
+     shell:
+       cmd: wget https://storage.cloud.google.com/gcs_scripts/httpd-2.2.25-win32-x86-no_ssl.zip && unzip httpd-2.2.25-win32-x86-no_ssl.zip
+       chdir: /tmp
+     
+       

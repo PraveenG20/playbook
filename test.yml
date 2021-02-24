@@ -1,0 +1,42 @@
+---
+
+- name: Installing symantec on windows server 2012 
+  hosts: win 
+  gather_facts: false
+
+  vars:
+    ansible_user: Admin1
+    ansible_connection: winrm
+    ansible_port: 5986
+    ansible_winrm_server_cert_validation: ignore
+    ansible_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33336533623562633266343039626239306465663065346266393230656565366564656261336435
+          6462656662313238313964396538643535393263323932620a396330326630343666353763636364
+          36323430623830326563393830316665646430653835303333393337666239333230313237646238
+          6461303532653661610a333962306563326134326435323936626662636563623162396633336233
+          3037
+
+  tasks:
+
+    - name: Create directory structure
+      win_file:
+        path: C:\temp
+        state: directory
+
+    - name: Download the symantec GCS bucket
+
+      win_get_url:
+
+        url: https://storage.googleapis.com/gcs_scripts/Symantec.zip
+        dest: C:\temp\
+
+    - name: unzip
+      win_unzip:
+        src: C:\temp\Symantec.zip
+        dest: C:\temp\Symantec
+#        creates: C:\temp\Symantec
+ #       recurse: yes
+#win_shell: "Expand-Archive c:\temp\\Symatec.zip -DestinationPath c:\\temp"
+
+

@@ -1,0 +1,10 @@
+---
+- name: Creating folder structure 
+
+  hosts: win 
+
+  tasks:
+    - name: Create directory structure
+      win_file:
+        path: C:\ansible_examples
+        state: directory
